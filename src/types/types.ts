@@ -69,3 +69,13 @@ export interface CryptoDataMockApi {
   data: CryptoDataItem[];
   status: Status;
 }
+
+export interface FormattedCryptoData {
+  name: string;
+  symbol: string;
+  price: number | null;
+  marketCap: number | null;
+  change24h: number | null;
+  rank: number;
+  volume24h: number | null;
+}

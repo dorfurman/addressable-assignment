@@ -8,8 +8,10 @@ const AppView = styled.div`
 `;
 
 export default function App() {
-  const data = useCryptoData();
-  console.log(data);
+  const { isLoading, isError } = useCryptoData();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error</div>;
   return (
     <AppView>
       <Grid />
