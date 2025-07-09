@@ -1,69 +1,88 @@
-# React + TypeScript + Vite
+# Cryptocurrency Market Data Grid
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A cryptocurrency market dashboard built with React and TypeScript, displaying live data from CoinMarketCap API in an interactive data grid.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Real-time cryptocurrency data with sorting and filtering
+- Filter by minimum market cap and maximum price
+- Pagination (10 items per page)
+- URL state management - filters persist in URL
+- Mock data mode for development (`?mock=true`)
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend**: React 19, TypeScript, Vite, AG Grid, React Query
+- **Backend**: Netlify Functions, Node.js
+- **Deployment**: Netlify
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Project Structure
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+```
+src/
+├── components/          # React components (Grid, filters, etc.)
+├── hooks/              # Custom hooks for data fetching
+├── types/              # TypeScript interfaces
+├── utils/              # Helper functions
+└── mocks/              # Sample data for development
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+netlify/functions/      # Serverless API endpoints
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Node.js 18+
+- Netlify CLI: `npm install -g netlify-cli`
+- CoinMarketCap API key (free at [pro.coinmarketcap.com](https://pro.coinmarketcap.com/api/))
+
+### Setup
+
+1. Clone and install dependencies:
+
+   ```bash
+   git clone <repo-url>
+   cd addressable-assignment
+   npm install
+   cd netlify/functions && npm install && cd ../..
+   ```
+
+2. Create `.env` file:
+
+   ```env
+   CMC_PRO_API_KEY=your_api_key_here
+   ```
+
+3. Start development server:
+
+   ```bash
+   netlify dev
+   ```
+
+   App will be available at `http://localhost:8888`
+
+### Development without API key
+
+Add `?mock=true` to use sample data: `http://localhost:8888?mock=true`
+
+## Configuration
+
+Supported URL parameters:
+
+| Parameter      | Description                                | Example                 |
+| -------------- | ------------------------------------------ | ----------------------- |
+| `minMarketCap` | Minimum market cap filter                  | `?minMarketCap=1000000` |
+| `maxPrice`     | Maximum price filter                       | `?maxPrice=50000`       |
+| `sortBy`       | Sort field (`market_cap`, `price`, `name`) | `?sortBy=price`         |
+| `order`        | Sort direction (`asc`, `desc`)             | `?order=desc`           |
+| `page`         | Page number                                | `?page=2`               |
+| `mock`         | Use mock data                              | `?mock=true`            |
+
+## Deployment
+
+Deploy to Netlify:
+
+1. Connect repository to Netlify
+2. Set `CMC_PRO_API_KEY` environment variable
+3. Deploy (build command: `npm run build`, publish directory: `dist`)
