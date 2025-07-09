@@ -1,5 +1,5 @@
-const { z } = require("zod");
-const axios = require("axios");
+import { z } from "zod";
+import axios from "axios";
 
 const API_LATEST_LISTINGS_URL = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
 const API_CRYPTO_LOGOS_URL = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?aux=logo";
