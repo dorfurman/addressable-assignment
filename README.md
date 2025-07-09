@@ -2,6 +2,8 @@
 
 A cryptocurrency market dashboard built with React and TypeScript, displaying live data from CoinMarketCap API in an interactive data grid.
 
+🌐 **[Live Preview](https://addressable-assignment.netlify.app/)**
+
 ## Features
 
 - Real-time cryptocurrency data with sorting and filtering
