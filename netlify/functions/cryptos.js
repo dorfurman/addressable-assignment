@@ -1,5 +1,5 @@
-const { z } = require("zod");
-const axios = require("axios");
+import { z } from "zod";
+import axios from "axios";
 
 const API_LATEST_LISTINGS_URL = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
 const API_CRYPTO_LOGOS_URL = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?aux=logo";
@@ -12,14 +12,14 @@ const CryptoParamsSchema = z.object({
   page: z.coerce.number().int().min(1).optional(),
 });
 
-exports.handler = async (event, context) => {
+export async function handler(event, context) {
   try {
     const { minMarketCap, maxPrice, sortBy, order, page } = CryptoParamsSchema.parse(event.queryStringParameters || {});
     const cmcParams = transformToCmcParams({ minMarketCap, maxPrice, sortBy, order, page });
     console.log(cmcParams);
 
     const response = await axios.get(
-      'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest',
+      API_LATEST_LISTINGS_URL,
       {
         params: cmcParams,
         headers: {
@@ -55,7 +55,7 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ error: "Error fetching data" }),
     };
   }
-};
+}
 
 function transformToCmcParams(valid) {
   const params = {};
