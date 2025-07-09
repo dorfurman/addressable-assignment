@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useParsedSearchParams } from "../hooks/useParsedSearchParams";
 import NumberInputField from "./NumberInputField";
 import SelectField from "./SelectField";
+import type { FormattedCryptoData } from "../types/types";
 
 const GridHeaderContainer = styled.div`
   display: flex;
@@ -49,7 +50,11 @@ export default function GridHeader() {
         label="Sort By"
         value={searchParams.sortBy || "market_cap"}
         options={sortByOptions}
-        onChange={(value) => updateParams({ sortBy: value as any })}
+        onChange={(value) =>
+          updateParams({
+            sortBy: value as keyof FormattedCryptoData,
+          })
+        }
       />
 
       <SelectField

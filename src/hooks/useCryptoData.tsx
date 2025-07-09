@@ -12,7 +12,7 @@ export const useCryptoData = () => {
   const isMock = searchParams.mock;
 
   const filteredSearchParams = Object.fromEntries(
-    Object.entries(searchParams).filter(([_, value]) => value !== undefined)
+    Object.entries(searchParams).filter(([, value]) => value !== undefined)
   );
 
   const fetchCryptoData = async () => {
