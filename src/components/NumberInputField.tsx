@@ -142,7 +142,7 @@ export default function NumberInputField(props: Props) {
   );
 }
 
-// Submit icon component - using arrow/enter icon
+// Submit icon component
 const SubmitIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M9 10l-5 5 5 5" />

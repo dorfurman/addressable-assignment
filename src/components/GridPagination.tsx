@@ -11,11 +11,11 @@ const PaginationContainer = styled.div`
 `;
 
 const PaginationButton = styled.button<{ disabled?: boolean }>`
-  background-color: #ffffff;
-  border: 1px solid #d1d5db;
+  background-color: transparent;
+  border: 0;
   border-radius: 6px;
   color: #1e2329;
-  padding: 10px 12px;
+  padding: 4px;
   font-size: 14px;
   font-weight: 400;
   transition: all 0.2s ease;
@@ -34,26 +34,26 @@ const PageLabel = styled.span`
 `;
 
 export default function GridPagination() {
-  const [params, setParams] = useParsedSearchParams();
+  const [params, updateParams] = useParsedSearchParams();
 
   const handlePageChange = (page: number) => {
-    console.log("page", params.page);
-    setParams({ page });
+    updateParams({ page });
   };
 
   return (
     <PaginationContainer>
+      <PageLabel>Current Page</PageLabel>
       <PaginationButton
         disabled={params.page === 1}
         onClick={() => handlePageChange((params.page ?? 1) - 1)}
       >
-        Previous
+        {"<"}
       </PaginationButton>
       <PageLabel>{params.page}</PageLabel>
       <PaginationButton
         onClick={() => handlePageChange((params.page ?? 1) + 1)}
       >
-        Next
+        {">"}
       </PaginationButton>
     </PaginationContainer>
   );

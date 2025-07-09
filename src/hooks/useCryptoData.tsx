@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useRef } from "react";
 import { cryptoDataMock } from "../mocks/cryptoDataMock";
 import axios from "axios";
 import type { CryptoDataItem, FormattedCryptoData } from "../types/types";
@@ -10,6 +11,7 @@ const API_URL = "/.netlify/functions/cryptos";
 export const useCryptoData = () => {
   const [searchParams] = useParsedSearchParams();
   const isMock = searchParams.mock;
+  const hasLoadedOnce = useRef(false);
 
   const filteredSearchParams = Object.fromEntries(
     Object.entries(searchParams).filter(([, value]) => value !== undefined)
@@ -30,17 +32,29 @@ export const useCryptoData = () => {
       return formattedData;
     } catch (error) {
       console.error(error);
-      return [];
+      throw new Error("Error fetching crypto data");
     }
   };
 
-  return useQuery({
+  const query = useQuery({
     queryKey: ["cryptoData", filteredSearchParams],
     queryFn: () => fetchCryptoData(),
     retry: false,
   });
+
+  // Track if we've successfully loaded data at least once
+  if (query.isSuccess && !hasLoadedOnce.current) {
+    hasLoadedOnce.current = true;
+  }
+
+  return {
+    ...query,
+    isLoading: query.isLoading,
+    isInitialLoading: query.isPending && !hasLoadedOnce.current,
+  };
 };
 
+// Format to ag-grid columns format
 function formatCryptoData(data: CryptoDataItem[]): FormattedCryptoData[] {
   return data.map((item) => {
     const usd = item.quote.USD;

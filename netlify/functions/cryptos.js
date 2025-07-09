@@ -12,11 +12,10 @@ const CryptoParamsSchema = z.object({
   page: z.coerce.number().int().min(1).optional(),
 });
 
-export async function handler(event, context) {
+export async function handler(event) {
   try {
     const { minMarketCap, maxPrice, sortBy, order, page } = CryptoParamsSchema.parse(event.queryStringParameters || {});
     const cmcParams = transformToCmcParams({ minMarketCap, maxPrice, sortBy, order, page });
-    console.log(cmcParams);
 
     const response = await axios.get(
       API_LATEST_LISTINGS_URL,

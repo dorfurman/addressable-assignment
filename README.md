@@ -29,6 +29,8 @@ src/
 netlify/functions/      # Serverless API endpoints
 ```
 
+> **Note**: The Netlify function uses `.js` instead of `.ts` since it's relatively small with minimal code, avoiding the extra TypeScript setup complexity for serverless functions.
+
 ## Getting Started
 
 ### Prerequisites
