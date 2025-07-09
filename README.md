@@ -47,7 +47,6 @@ netlify/functions/      # Serverless API endpoints
    git clone <repo-url>
    cd addressable-assignment
    npm install
-   cd netlify/functions && npm install && cd ../..
    ```
 
 2. Create `.env` file:
