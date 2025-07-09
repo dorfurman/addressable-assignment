@@ -50,6 +50,7 @@ export interface CryptoDataItem {
   self_reported_circulating_supply?: number | null;
   self_reported_market_cap?: number | null;
   tvl_ratio?: number | null;
+  logo?: string | null;
 }
 
 // (optional) Status type if you want to match the CoinMarketCap API response
@@ -75,7 +76,12 @@ export interface FormattedCryptoData {
   symbol: string;
   price: number | null;
   marketCap: number | null;
+  change1h: number | null;
   change24h: number | null;
+  change7d: number | null;
   rank: number;
   volume24h: number | null;
+  totalSupply: number | null;
+  circulatingSupply: number | null;
+  logo: string | null;
 }
