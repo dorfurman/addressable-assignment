@@ -7,8 +7,12 @@ import GridPagination from "./GridPagination";
 import { columnDefs } from "../utils/columnDefs";
 
 const GridContainer = styled.div`
-  width: 1500px;
   height: auto;
+  width: 100%;
+  max-width: min(80%, 1500px);
+  min-width: 320px;
+  max-height: 80vh;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -20,23 +24,29 @@ const GridContainer = styled.div`
   overflow: hidden;
 `;
 
+const AgGridWrapper = styled.div`
+  overflow: auto;
+`;
+
 export default function Grid() {
   const { data, isLoading } = useCryptoData();
 
   return (
     <GridContainer>
       <GridHeader />
-      <AgGridReact<FormattedCryptoData>
-        className="ag-theme-alpine coinmarketcap-grid"
-        loading={isLoading}
-        rowData={data}
-        columnDefs={columnDefs}
-        animateRows={true}
-        rowHeight={60}
-        headerHeight={50}
-        suppressCellFocus={true}
-        domLayout="autoHeight"
-      />
+      <AgGridWrapper>
+        <AgGridReact<FormattedCryptoData>
+          className="ag-theme-alpine coinmarketcap-grid"
+          loading={isLoading}
+          rowData={data}
+          columnDefs={columnDefs}
+          animateRows={true}
+          rowHeight={60}
+          headerHeight={50}
+          suppressCellFocus={true}
+          domLayout="autoHeight"
+        />
+      </AgGridWrapper>
       <GridPagination />
     </GridContainer>
   );
